@@ -140,7 +140,7 @@ public class SpellcheckerUI extends JFrame implements DocumentListener {
 
 		spellchecker.performSpellcheck();
 
-		for (SpellCheckItem item : spellchecker.getContent()) {
+		for (SpellCheckItem item : spellchecker.getSpellCheckItems()) {
 			if (item.isFlagged()) {
 				flaggedItems.add(item);
 				HighlightSpellCheckItem(item, HIGHLIHT_COLOR);

@@ -22,10 +22,6 @@ public class Spellchecker {
 
 	private int threadNumber = 5;
 
-	public Collection<SpellCheckItem> getContent() {
-		return content.getContent().values();
-	}
-
 	public Spellchecker() {
 		dictionaryFactory = new DictionaryFromFileFactory();
 		content = new Content();
@@ -39,24 +35,33 @@ public class Spellchecker {
 			new Thread((new SpellcheckerConsumer(todoQueue, doneQueue, dictionary))).start();
 		}
 
-		int count = content.getContent().values().size();
-		for (SpellCheckItem item : content.getContent().values()) {
-			try {
-				todoQueue.put(item);
-			} catch (InterruptedException e) {
-			}
+		for (SpellCheckItem item : getSpellCheckItems()) {
+			publishSpellCheckItem(item);
 		}
 
-		while (count > 0) {
-			SpellCheckItem item = null;
-			try {
-				item = doneQueue.take();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			findSpellCheckItemByOffset(item.getOffset()).flag(item.isFlagged());
-			count--;
+		int wordsCount = content.getWordsCount();
+		while (wordsCount > 0) {
+			receiveSpellCheckItem();
+			wordsCount--;
 		}
+	}
+
+	private void publishSpellCheckItem(SpellCheckItem item) {
+		try {
+			todoQueue.put(item);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private SpellCheckItem receiveSpellCheckItem() {
+		SpellCheckItem item = null;
+		try {
+			item = doneQueue.take();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		return item;
 	}
 
 	public void addToDictionary(String word) {
@@ -79,5 +84,8 @@ public class Spellchecker {
 		return content.getContentAsString();
 	}
 
+	public Collection<SpellCheckItem> getSpellCheckItems() {
+		return content.getSpellCheckItems();
+	}
 
 }

@@ -4,6 +4,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+/**
+ * Multithreading only for reads, adding a new word is from a single UI's client
+ * thread so there are no synchronizations needed.
+ * 
+ * Basic implementaion - case insencitive.
+ */
 public class DictionaryBasicImpl implements Dictionary {
 
 	// read operation are more often than writes -> dictionary ordered
@@ -34,10 +40,9 @@ public class DictionaryBasicImpl implements Dictionary {
 		if (dictionary.containsKey(key)) {
 			isMissed = false;
 		} else {
-			// TODO: apply the word's lower case/upper case
-			return isMissed = true;
+			isMissed = true;
 		}
-		System.out.println(word + " is missEd ? " + isMissed);
+		//System.out.println(word + " is missEd ? " + isMissed);
 		return isMissed;
 	}
 

@@ -1,5 +1,6 @@
 package spellchecker.content;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +8,7 @@ import java.util.Map;
 import spellchecker.util.IOUtils;
 
 public class Content {
-	
+
 	private static String LINE_SEPARATOR = System.getProperty("line.separator");
 
 	private String contentRelativeFilePath = "content.txt";
@@ -60,7 +61,6 @@ public class Content {
 		return b.toString();
 	}
 
-
 	protected List<String> loadContent() {
 		List<String> contentLines = IOUtils.readFileAllLines(contentRelativeFilePath);
 		return contentLines;
@@ -71,8 +71,16 @@ public class Content {
 		IOUtils.writeFile(contentRelativeFilePath, contentLines);
 	}
 
-	public Map<Integer, SpellCheckItem> getContent() {
-		return content;
+//	public Map<Integer, SpellCheckItem> getContent() {
+//		return content;
+//	}
+
+	public int getWordsCount() {
+		return content.values().size();
+	}
+
+	public Collection<SpellCheckItem> getSpellCheckItems() {
+		return content.values();
 	}
 
 }

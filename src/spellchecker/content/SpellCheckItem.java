@@ -1,10 +1,15 @@
 package spellchecker.content;
 
+/** Encapsulates the property of an item to spell-check */
 public class SpellCheckItem {
 
+	// a word to spell-check
 	private String token;
-	private boolean isChecked;
+
+	// true if misspelled (not in a dictionary)
 	private boolean isFlagged;
+
+	// relative location from the beginning of the text
 	private int offset;
 
 	public SpellCheckItem(String token, int offset) {
@@ -12,7 +17,6 @@ public class SpellCheckItem {
 		this.offset = offset;
 	}
 
-	
 	public String getToken() {
 		return token;
 	}
@@ -21,20 +25,12 @@ public class SpellCheckItem {
 		this.token = token;
 	}
 
-	public boolean isChecked() {
-		return isChecked;
-	}
-
-	public void setChecked(boolean isChecked) {
-		this.isChecked = isChecked;
-	}
-
 	public boolean isFlagged() {
 		return isFlagged;
 	}
 
 	public void flag(boolean isFlagged) {
-		this.isFlagged= isFlagged;
+		this.isFlagged = isFlagged;
 	}
 
 	public int getOffset() {
@@ -47,8 +43,7 @@ public class SpellCheckItem {
 
 	@Override
 	public String toString() {
-		return "SpellCheckItem [token=" + token + ", isChecked=" + isChecked + ", isFlagged=" + isFlagged + ", offset="
-				+ offset + "]";
+		return "SpellCheckItem [token=" + token + ", isFlagged=" + isFlagged + ", offset=" + offset + "]";
 	}
 
 }
