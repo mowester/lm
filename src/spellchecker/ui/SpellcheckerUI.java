@@ -18,7 +18,7 @@ public class SpellcheckerUI extends JFrame implements DocumentListener {
 
 	private Spellchecker spellchecker;
 	private java.util.List<SpellCheckItem> flaggedItems = new java.util.ArrayList();
-	
+
 	private JScrollPane contentPane;
 	private JTextArea contentTextArea;
 	private JLabel notInDictionaryLabel;
@@ -26,11 +26,10 @@ public class SpellcheckerUI extends JFrame implements DocumentListener {
 	private JPanel notInDictionaryPanel;
 	private JPanel controlsPanel;
 
-	
 	public SpellcheckerUI() {
 		super("A simple Spellchecker demo");
 		initComponents();
-		
+
 		contentTextArea.getDocument().addDocumentListener(this);
 		contentTextArea.addCaretListener(new CaretListener() {
 			@Override
@@ -38,7 +37,7 @@ public class SpellcheckerUI extends JFrame implements DocumentListener {
 				spellItemSelected(event);
 			}
 		});
-		
+
 		spellchecker = new Spellchecker();
 		loadContent();
 
@@ -105,48 +104,31 @@ public class SpellcheckerUI extends JFrame implements DocumentListener {
 	}
 
 	public void changedUpdate(DocumentEvent ev) {
-		System.out.println("insertUpdate"+ ev.getLength());
-
-		if (ev.getLength() != 1) {
-			return;
-		}
-
-		int pos = ev.getOffset();
-		String content = null;
-		try {
-			content = contentTextArea.getText(0, pos + 1);
-		} catch (BadLocationException e) {
-			e.printStackTrace();
-		}
-		System.out.println(content);
-
+		// System.out.println("insertUpdate"+ ev.getLength());
+		//
+		// if (ev.getLength() != 1) {
+		// return;
+		// }
+		// int pos = ev.getOffset();
 	}
 
 	public void removeUpdate(DocumentEvent ev) {
-		System.out.println("removeUpdate "+ev.getOffset());
-		int offset =0;
-		SpellCheckItem item = spellchecker.findSpellCheckItemByOffset(offset);
-		
+		// TODO
 	}
 
 	@Override
 	public void insertUpdate(DocumentEvent ev) {
-		System.out.println("insertUpdate"+ ev.getOffset());
-		int offset =0;
-		SpellCheckItem item = spellchecker.findSpellCheckItemByOffset(offset);
+		// TODO
 	}
-	
-	
-	
+
 	public void spellItemSelected(CaretEvent event) {
-		//int dot = event.getDot();
+		// int dot = event.getDot();
 		int mark = event.getMark();
-		// System.out.println("dot =" + dot + " mark =" + mark);
 
 		SpellCheckItem item = spellchecker.findSpellCheckItemByOffset(mark);
 		if (item != null && item.isFlagged()) {
 			notInDictionaryTextField.setText(item.getToken());
-		}else{
+		} else {
 			notInDictionaryTextField.setText("");
 		}
 
@@ -161,7 +143,7 @@ public class SpellcheckerUI extends JFrame implements DocumentListener {
 		for (SpellCheckItem item : spellchecker.getContent()) {
 			if (item.isFlagged()) {
 				flaggedItems.add(item);
-				HighlightSpellCheckItem(item,HIGHLIHT_COLOR);
+				HighlightSpellCheckItem(item, HIGHLIHT_COLOR);
 			}
 		}
 	}
@@ -185,6 +167,5 @@ public class SpellcheckerUI extends JFrame implements DocumentListener {
 			ex.setVisible(true);
 		});
 	}
-	
 
 }
